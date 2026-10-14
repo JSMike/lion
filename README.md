@@ -121,29 +121,35 @@ example `+594890123456`, which the previous `awesome-phonenumber@7.8.0` rejected
 We keep this workaround until the next upstream awesome-phonenumber release
 incorporating the required metadata is available.
 
-The artifact lives in `packages/ui/vendor/awesome-phonenumber-7.9.0-tlouisse.libphonenumber-9.0.41.tgz`.
-`@lion/ui` uses a package-relative `file:vendor/...` dependency and bundles the
-installed `awesome-phonenumber` package when published. This preserves normal
-consumer installation and lazy imports without access to the Lion checkout.
-The private root also declares the same tarball as a development dependency so
-npm installs it during a clean workspace install rather than assuming the
-workspace already contains its bundled dependencies. The legacy docs dependency
-keeps its separate registry version.
-The temporary `prepack` helper verifies the checksum and installs only the tarball
-in an isolated temporary prefix using npm's offline mode (without running dependency
-scripts or writing a lockfile). It copies that installed package into the local
-bundle and removes the temporary prefix, because npm packing does not include
-hoisted workspace bundles. Other Lion dependencies remain unchanged.
-The original MIT license and Google's Apache-2.0 notices remain in the artifact
-and bundled package. See [vendor provenance](packages/ui/vendor/README.md) for the
-source commit, checksum, and reproducible packaging instructions.
+The unpacked artifact lives in `packages/ui/vendor/awesome-phonenumber`.
+`@lion/ui` declares its exact custom version and a `bundledDependencies` array;
+there is no published `file:` dependency for npm to resolve against the consumer.
+The private root uses that vendor directory as a development dependency.
+The root `.npmrc` sets `install-links=true` so npm installs this directory as a
+regular package rather than linking its upstream development workspace into Lion.
+The legacy docs dependency keeps its separate registry version.
+The temporary `prepack` helper verifies every vendored file against its SHA-256
+checksum, then copies the unpacked package into the workspace-local bundle.
+It runs without npm subprocesses, network access, dependency scripts or temporary
+installations. npm packing does not include hoisted workspace bundles.
+The original MIT license and Google's Apache-2.0 notices remain in both the vendor
+directory and bundle. See [vendor provenance](packages/ui/vendor/README.md) for the
+source commit, checksums, and reproducible packaging instructions.
+
+Run `npm run test:node --workspace @lion/ui` to pack Lion, install it into a fresh
+consumer outside the checkout with no overrides, and verify ESM, CommonJS,
+TypeScript, licenses, checksums, and French Guiana metadata. The test also checks
+that prepack rejects modified vendor files. The install needs registry access
+for Lion's ordinary dependencies; the custom phone package comes from the bundle.
 
 Once the next upstream awesome-phonenumber release includes the required
 metadata, restore the normal registry dependency in `packages/ui/package.json`,
-remove `awesome-phonenumber` from `bundledDependencies`, remove the vendor asset
+remove `awesome-phonenumber` from `bundledDependencies`, remove the vendor directory
 and its `files` entry, remove the root development dependency, and regenerate
-`package-lock.json`. Remove the temporary `prepack` lifecycle and
-`scripts/prepare-vendored-phone.js` helper as well. Keep the metadata
+`package-lock.json`. Remove `install-links=true` from `.npmrc` if no other local
+directory dependencies need it. Remove the temporary `prepack` lifecycle and
+`scripts/prepare-vendored-phone.js` helper as well. Update the packaging test to
+check the registry dependency instead of the temporary bundle. Keep the metadata
 regression test and rerun the phone tests, typechecks, and packed-consumer install
 check before removing this workaround documentation.
 

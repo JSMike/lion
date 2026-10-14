@@ -8,6 +8,7 @@ _site-dev
 _site
 docs/_merged_*
 patches/
+packages/ui/vendor/awesome-phonenumber/
 
 _demos
 /docs/_assets/scoped-custom-element-registry.min.js

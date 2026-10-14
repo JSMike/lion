@@ -1,0 +1,11 @@
+{
+  "LICENSE": "c45fa66a77c0422408ee673722b44fd8d7dc47191e77e2b3dc603ff00e6a1818",
+  "LICENSE.closure-library": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+  "LICENSE.libphonenumber": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+  "README.md": "5bbff1e8e08f80845853a85c28664fb78d4bbae9f81e4bfedba59e87ba4c7afa",
+  "index-esm.mjs": "8da7307c02a04358340eef8144f950a9253c31112f238ca569beca9326147323",
+  "index.d.ts": "69d02c8b9e8c18ccd34ac45fcc5ae80cf0aa8ccb29a86d8af008c549349d5892",
+  "index.js": "0aec6485694f8f0ed9b57a412172ca314324bc3b46e34a879595dcf37478b614",
+  "lib/index.js": "3197eb3ceb8f8656c4779e1449243b253d4f7eaccc7a0e7fa7560e020917569c",
+  "package.json": "30423b153af50fe6d6b126751f7528c412c13130b8af549e217dd6e667bc032d"
+}

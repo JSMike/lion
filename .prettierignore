@@ -13,3 +13,4 @@ _demos
 /docs/_merged_includes/
 
 /packages/ui/_legacy-changelogs
+/packages/ui/vendor/awesome-phonenumber/
