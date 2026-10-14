@@ -13,9 +13,14 @@ import { generateCustomData } from 'cem-plugin-vs-code-custom-data-generator';
 import { customElementJetBrainsPlugin } from 'custom-element-jet-brains-integration';
 
 /**
- * Find all entrypoints for lion to create the CEM from
+ * Find the runtime entrypoints for lion to create the CEM from. Test helpers and
+ * suites register fixture elements, not elements available to applications.
  */
-const globs = await globby('./exports/**/*.js');
+const globs = await globby([
+  './exports/**/*.js',
+  '!./exports/*-test-helpers.js',
+  '!./exports/*-suites.js',
+]);
 
 /**
  * Based on the entrypoints, create a module graph including @lion/ui dependency
