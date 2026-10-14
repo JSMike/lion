@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import module from 'node:module';
+import path from 'node:path';
 import * as esm from 'awesome-phonenumber';
 import { PhoneUtilManager } from './components/input-tel/src/PhoneUtilManager.js';
 import { parsePhoneNumber } from './components/input-tel/src/parsers.js';
@@ -16,7 +17,7 @@ assert.equal(manifest.exports['.'].default, './index-esm.mjs');
 assert.equal(manifest.exports['.'].require, './index.js');
 assert.equal(manifest.exports['.'].types, './index.d.ts');
 assert(import.meta.resolve('awesome-phonenumber').endsWith('/index-esm.mjs'));
-assert(require.resolve('awesome-phonenumber').endsWith('/index.js'));
+assert.equal(path.basename(require.resolve('awesome-phonenumber')), 'index.js');
 
 await PhoneUtilManager.loadComplete;
 for (const api of [esm, cjs, PhoneUtilManager.PhoneUtil]) {
