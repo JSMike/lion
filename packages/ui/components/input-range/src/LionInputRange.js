@@ -12,7 +12,7 @@ import { localizeNamespaceLoader } from './localizeNamespaceLoader.js';
 /**
  * LionInputRange: extension of lion-input.
  *
- * @customElement `lion-input-range`
+ * @customElement lion-input-range
  */
 export class LionInputRange extends LocalizeMixin(LionInput) {
   /** @type {any} */

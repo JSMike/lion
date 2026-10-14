@@ -22,6 +22,11 @@ describe('Custom Elements Manifest', () => {
     for (const entry of definitions) {
       expect(entry.name).to.match(/^[a-z][a-z0-9._-]*-[a-z0-9._-]*$/);
     }
+    for (const declaration of manifest.modules.flatMap(module => module.declarations || [])) {
+      if (declaration.tagName) {
+        expect(declaration.tagName).to.match(/^[a-z][a-z0-9._-]*-[a-z0-9._-]*$/);
+      }
+    }
 
     // Dependency analysis must still provide inherited component API metadata.
     const input = manifest.modules
